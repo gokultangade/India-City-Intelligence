@@ -1,0 +1,11 @@
+city,state,total_records,valid_measurements,avg_pm10,max_pm10
+Delhi,Delhi,59,55,196.45,325
+Ghaziabad,"Uttar Pradesh",7,6,177.17,229
+Ahmedabad,Gujarat,8,8,124.62,154
+Agra,"Uttar Pradesh",6,6,120.83,162
+Jodhpur,Rajasthan,5,5,119.8,139
+Jaipur,Rajasthan,6,5,113.6,143
+Moradabad,"Uttar Pradesh",6,6,111,134
+Mumbai,Maharashtra,24,22,104.45,150
+Lucknow,"Uttar Pradesh",6,6,102.83,141
+"Navi Mumbai",Maharashtra,6,6,101.67,122
