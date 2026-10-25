@@ -325,6 +325,10 @@ The report contains three pages.
 \### 1. Main Dashboard
 
 
+<img width="1748" height="789" alt="01_Main_Dashboard" src="https://github.com/user-attachments/assets/ac235d94-58e2-4d71-90dd-e13e8ed0ae12" />
+
+
+
 
 \- KPI cards showing the number of states, cities, records, and stations.
 
@@ -340,6 +344,10 @@ The report contains three pages.
 
 \### 2. City Analysis
 
+<img width="1507" height="780" alt="02_City_Analysis" src="https://github.com/user-attachments/assets/f26d696c-419a-4d92-b83d-cf6a5326da98" />
+
+
+
 
 
 \- City-level analysis.
@@ -351,6 +359,10 @@ The report contains three pages.
 
 
 \### 3. Smart City Map
+
+
+<img width="1508" height="786" alt="03_Smart_City_Map" src="https://github.com/user-attachments/assets/f15299a5-7757-45ac-b8aa-8be666827206" />
+
 
 
 
