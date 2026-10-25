@@ -1,766 +1,330 @@
-\# India City Intelligence — Smart City Decision Dashboard
+# India City Intelligence — Smart City Decision Dashboard
 
+An end-to-end Data Analytics project that explores air-quality monitoring data across Indian cities using Python, SQL, Power BI, and Streamlit.
 
+## Project Overview
 
-An end-to-end Data Analytics project that explores air-quality measurements across Indian cities using Python, SQL, Power BI, and Streamlit.
+**India City Intelligence** is a data analytics project designed to explore air-quality records from monitoring stations across India and present useful information through interactive dashboards and visualizations.
 
+The project demonstrates an end-to-end analytics workflow, including:
 
+- Data collection and loading
+- Data cleaning and preprocessing
+- Data-quality checks
+- Exploratory Data Analysis (EDA)
+- SQL-based analysis using MySQL
+- Power BI dashboard development
+- Interactive Streamlit dashboard development
+- Data visualization and CSV export
 
-\## Project Overview
+The objective is to make city-level air-quality data easier to explore, compare, and understand.
 
+> **Important:** This is an educational and portfolio project. It is not a live air-quality monitoring service, official alert system, or source of medical advice. The dashboard uses a dataset snapshot and does not automatically guarantee real-time readings.
 
+## Problem Statement
 
-\*\*India City Intelligence\*\* is a data analytics project designed to explore air-quality monitoring records across Indian cities and present insights through interactive dashboards.
+Air-quality datasets contain records from different cities, states, monitoring stations, and pollutants. Analyzing these records manually can make it difficult to compare measurements, identify missing values, and understand monitoring-station coverage.
 
+This project organizes the data into a structured analytics workflow and provides charts, filters, maps, and SQL queries to support exploration and comparison.
 
+## Project Objectives
 
-The project demonstrates a complete analytics workflow, including data loading, data-quality checks, data cleaning, exploratory data analysis (EDA), SQL queries, Power BI visualizations, and an interactive Streamlit application.
+- Load and inspect air-quality data using Python.
+- Identify missing values and duplicate records.
+- Validate dates, geographic coordinates, and pollutant measurements.
+- Clean and prepare data for analysis.
+- Explore pollutant measurements across cities and states.
+- Compare pollutant averages and city-level values.
+- Perform structured analysis using MySQL and SQL.
+- Create interactive Power BI dashboard pages.
+- Build a Streamlit application with filters, charts, a map, and CSV download.
+- Document the project for reproducibility and portfolio presentation.
 
-
-
-The objective is to make city-level air-quality records easier to explore and compare.
-
-
-
-\*\*Important:\*\* This project is intended for educational and portfolio purposes. It is not a live air-quality monitoring service, official alert system, or source of medical advice.
-
-
-
-\## Problem Statement
-
-
-
-Air-quality datasets contain measurements from multiple cities, states, monitoring stations, and pollutants. Analyzing these records manually can make it difficult to compare pollutant measurements, understand missing data, and explore monitoring-station coverage.
-
-
-
-This project organizes the data into a structured analytical workflow and presents the results through charts, filters, maps, and SQL queries.
-
-
-
-\## Project Objectives
-
-
-
-\- Load and inspect air-quality data using Python.
-
-\- Identify missing values, duplicate records, and invalid measurements.
-
-\- Clean and prepare data for analysis.
-
-\- Explore pollutant measurements across cities and states.
-
-\- Compare pollutant averages and city-level values.
-
-\- Analyze data using MySQL and SQL.
-
-\- Create interactive Power BI dashboard pages.
-
-\- Develop a Streamlit application with filters, charts, a map, and CSV export.
-
-\- Document the project for reproducibility and portfolio presentation.
-
-
-
-\## Key Analytical Questions
-
-
-
-1\. How many states, cities, monitoring stations, and records are present?
-
-2\. How do reported average measurements differ across pollutants?
-
-3\. Which cities have the highest reported averages for a selected pollutant?
-
-4\. Where are monitoring stations located?
-
-5\. How much measurement data is missing?
-
-6\. How do results change when users select a state, city, or pollutant?
-
-7\. What data-quality issues should be considered before interpreting the results?
-
-
-
-\## Tools and Technologies
-
-
+## Tools and Technologies
 
 | Technology | Purpose |
-
 |---|---|
-
-| Python | Data processing, cleaning, analysis, and visualization |
-
+| Python | Data cleaning, processing, and analysis |
 | pandas | Data manipulation and analysis |
-
-| Matplotlib / plotting libraries | Exploratory charts |
-
-| MySQL | Structured data storage and SQL analysis |
-
+| Matplotlib and plotting libraries | Exploratory data visualization |
+| MySQL | Database storage and SQL analysis |
 | MySQL Workbench | Running and inspecting SQL queries |
-
-| Power BI | Interactive dashboard and data visualization |
-
+| Power BI | Interactive dashboard development |
 | Power Query | Data transformation |
-
 | Streamlit | Interactive analytics web application |
-
 | Git | Version control |
-
 | GitHub | Project hosting and portfolio sharing |
 
+## Dataset Description
 
+The project uses air-quality monitoring data from India's Open Government Data Platform.
 
-\## Dataset Description
+**Dataset:** Real Time Air Quality Index from Various Locations  
+**Provider:** Central Pollution Control Board (CPCB), Ministry of Environment, Forest and Climate Change, Government of India.
 
+**Official source:**  
+https://www.data.gov.in/resource/real-time-air-quality-index-various-locations
 
+### Dataset Files
 
-The project uses a CSV dataset containing air-quality monitoring records.
+- `data/aqi_api_data.csv` — downloaded source data snapshot.
+- `data/aqi_api_cleaned.csv` — cleaned dataset used by the Streamlit application.
 
+The dataset is a snapshot, not a continuously refreshed live feed. Results may differ when a newer source dataset is downloaded and processed.
 
-
-Expected local files:
-
-
-
-\- `data/aqi\_data.csv` — source dataset.
-
-\- `data/aqi\_cleaned.csv` — cleaned dataset used by the application.
-
-
-
-\### Dataset columns
-
-
+### Dataset Columns
 
 | Column | Description |
-
 |---|---|
-
 | `country` | Country associated with the record |
-
 | `state` | State or region |
-
 | `city` | City associated with the record |
-
 | `station` | Monitoring station name |
-
-| `last\_update` | Timestamp provided with the measurement |
-
+| `last_update` | Timestamp provided with the measurement |
 | `latitude` | Geographic latitude |
-
 | `longitude` | Geographic longitude |
+| `pollutant_id` | Pollutant identifier, such as PM2.5, PM10, NO2, SO2, NH3, CO, or OZONE |
+| `pollutant_min` | Reported minimum pollutant measurement |
+| `pollutant_max` | Reported maximum pollutant measurement |
+| `pollutant_avg` | Reported average pollutant measurement |
 
-| `pollutant\_id` | Pollutant identifier, such as PM2.5 or PM10 |
+## Data Cleaning and Quality Checks
 
-| `pollutant\_min` | Reported minimum measurement |
+The data-processing workflow checks for:
 
-| `pollutant\_max` | Reported maximum measurement |
+- Duplicate records
+- Missing pollutant measurements
+- Invalid dates
+- Invalid geographic coordinates
+- Negative measurements
+- Inconsistent minimum, average, and maximum measurements
 
-| `pollutant\_avg` | Reported average measurement |
+Missing measurements are not automatically replaced with zero because zero and missing data have different meanings.
 
+## Results from the Analyzed Dataset Snapshot
 
+The cleaned API dataset used for the current dashboard contains the following results:
 
-\### Dataset snapshot
-
-
-
-The analyzed dataset contained the following values at the time of analysis:
-
-
-
-| Metric | Value |
-
+| Metric | Result |
 |---|---:|
-
-| Total records | 3,696 |
-
-| Total columns | 11 |
-
-| Cities | 270 |
-
+| Cleaned records | 3,296 |
 | States | 31 |
+| Cities | 275 |
+| Monitoring stations | 526 |
+| Duplicate rows after cleaning | 0 |
+| Missing values in `pollutant_min` | 279 |
+| Missing values in `pollutant_max` | 279 |
+| Missing values in `pollutant_avg` | 279 |
 
-| Monitoring stations | 528 |
+These figures describe the dataset snapshot analyzed on 25 October 2026. They should not be interpreted as current national air-quality statistics.
 
-| Duplicate rows detected | 0 |
+Missing values can affect comparisons and rankings. The results depend on the available source records, timestamps, cleaning rules, and aggregation methods.
 
-| Rows with missing pollutant measurements | 329 |
-
-| Missing-measurement row percentage | Approximately 8.9% |
-
-
-
-These figures describe the analyzed snapshot and may change if the dataset is updated.
-
-
-
-\*\*Data-source note:\*\* Before publishing the raw dataset, verify the original provider's license, attribution requirements, and redistribution terms. If redistribution is not permitted, provide the source and download instructions instead of committing the raw data.
-
-
-
-\## Project Workflow
-
-
-
-1\. Load the source CSV using Python.
-
-2\. Inspect rows, columns, data types, and unique locations.
-
-3\. Check missing values and duplicate records.
-
-4\. Validate dates, geographic coordinates, and pollutant measurements.
-
-5\. Save the cleaned dataset.
-
-6\. Perform exploratory data analysis.
-
-7\. Generate charts and city-level analysis files.
-
-8\. Store or query data using MySQL.
-
-9\. Build the Power BI dashboard.
-
-10\. Build and test the Streamlit application.
-
-11\. Document the project and publish appropriate files to GitHub.
-
-
-
-\## Data Quality and Cleaning
-
-
-
-The implemented checks included:
-
-
-
-\- Duplicate-row detection.
-
-\- Missing-value analysis.
-
-\- Date validation.
-
-\- Latitude and longitude validation.
-
-\- Negative measurement checks.
-
-\- Consistency checks between minimum, average, and maximum values.
-
-
-
-\### Results from the analyzed snapshot
-
-
-
-\- No duplicate rows were detected.
-
-\- 329 rows had missing pollutant measurements in the checked fields, approximately 8.9%.
-
-\- No invalid dates were detected by the implemented checks.
-
-\- No invalid coordinates were detected by the implemented checks.
-
-\- No negative measurements were detected by the implemented checks.
-
-\- No inconsistent minimum, average, and maximum values were detected by the implemented checks.
-
-
-
-Missing values should not automatically be treated as zero. The appropriate handling depends on the analysis being performed.
-
-
-
-\## Exploratory Data Analysis
-
-
+## Exploratory Data Analysis (EDA)
 
 Python scripts in the `notebooks/` directory support data-quality checks, exploratory analysis, and visualization.
 
+Generated charts include:
 
+- `outputs/charts/missing_measurements.png` — overview of missing measurements.
+- `outputs/charts/pollutant_comparison.png` — comparison of pollutant measurements.
+- `outputs/charts/top_10_cities.png` — city comparison generated by the analysis workflow.
 
-Generated chart files include:
+City-level analysis files may include:
 
+- `outputs/pm25_city_analysis.csv`
+- `outputs/pm10_city_analysis.csv`
 
+A city's position in a chart depends on the selected pollutant, available measurements, filters, timestamps, and aggregation method. Rankings from a dataset snapshot are not real-time rankings.
 
-\- `outputs/charts/missing\_measurements.png` — overview of missing measurements.
+## SQL Analysis Using MySQL
 
-\- `outputs/charts/pollutant\_comparison.png` — comparison of pollutant measurements.
+MySQL is used to demonstrate structured querying and analytical workflows.
 
-\- `outputs/charts/top\_10\_cities.png` — top-city comparison generated by the analysis workflow.
+The SQL analysis can cover:
 
+- City-level pollutant comparisons
+- PM2.5 analysis
+- PM10 analysis
+- Aggregation and grouping
+- Data-quality checks
+- Sorting and filtering records
 
+Open the SQL files in MySQL Workbench. Before running queries, confirm that the database, table, and column names match your local setup.
 
-City-level analysis files include:
-
-
-
-\- `outputs/pm25\_city\_analysis.csv`
-
-\- `outputs/pm10\_city\_analysis.csv`
-
-
-
-The interpretation of a city's position in a chart depends on the calculation, filters, timestamps, and available measurements. A chart based on a dataset snapshot should not be treated as a real-time ranking.
-
-
-
-\## Power BI Dashboard
-
-
+## Power BI Dashboard
 
 Power BI report file:
 
+`powerbi/India_City_Intelligence.pbix`
 
+The report contains three dashboard pages.
 
-`powerbi/India\_City\_Intelligence.pbix`
+### 1. Main Dashboard
 
+![Main Dashboard](https://github.com/user-attachments/assets/ac235d94-58e2-4d71-90dd-e13e8ed0ae12)
 
+Features:
 
-The report contains three pages.
+- KPI cards for states, cities, records, and stations
+- Average pollutant comparison chart
+- State slicer
+- City slicer
+- Interactive exploration of available records
 
+### 2. City Analysis
 
+![City Analysis](https://github.com/user-attachments/assets/f26d696c-419a-4d92-b83d-cf6a5326da98)
 
-\### 1. Main Dashboard
+Features:
 
+- City-level analysis
+- Top 10 comparison chart
+- Visual comparison based on configured measures and filters
 
-<img width="1748" height="789" alt="01_Main_Dashboard" src="https://github.com/user-attachments/assets/ac235d94-58e2-4d71-90dd-e13e8ed0ae12" />
+### 3. Smart City Map
 
+![Smart City Map](https://github.com/user-attachments/assets/f15299a5-7757-45ac-b8aa-8be666827206)
 
+Features:
 
+- Monitoring-station locations using latitude and longitude
+- Geographic exploration of available records
+- Map tooltips for station information
 
-\- KPI cards showing the number of states, cities, records, and stations.
+The Power BI report reflects the data loaded into its model. Refresh the data source appropriately when the dataset changes.
 
-\- Average pollutant comparison chart.
+## Streamlit Interactive Application
 
-\- State slicer.
+Application file: `app/app.py`
 
-\- City slicer.
+The Streamlit application provides an interactive way to explore the cleaned dataset.
 
-\- Interactive exploration of the available records.
+### Dashboard Features
 
+- State filter
+- City filter
+- Pollutant filter
+- KPI metrics
+- Pollutant average comparison chart
+- Top city-pollutant average chart
+- Monitoring-station map
+- Filtered data table
+- CSV download of filtered records
 
+The application reads the cleaned CSV file from the project data directory or its configured application directory.
 
-\### 2. City Analysis
+## Installation and Setup
 
-<img width="1507" height="780" alt="02_City_Analysis" src="https://github.com/user-attachments/assets/f26d696c-419a-4d92-b83d-cf6a5326da98" />
+### Requirements
 
+- Python 3.10 or a compatible supported version
+- Git
+- MySQL Server and MySQL Workbench for SQL analysis
+- Power BI Desktop for the Power BI report
+- Internet connection for downloading data or loading online map tiles, where required
 
-
-
-
-\- City-level analysis.
-
-\- Top 10 chart for comparing selected city or pollutant values.
-
-\- Visual comparison based on the report's configured measures and filters.
-
-
-
-\### 3. Smart City Map
-
-
-<img width="1508" height="786" alt="03_Smart_City_Map" src="https://github.com/user-attachments/assets/f15299a5-7757-45ac-b8aa-8be666827206" />
-
-
-
-
-\- Monitoring-station locations using latitude and longitude.
-
-\- Geographic exploration of the dataset.
-
-\- Map tooltips for inspecting available station information.
-
-
-
-The report reflects the data loaded into the model and should be refreshed appropriately if the source data changes.
-
-
-
-\## Streamlit Interactive Application
-
-
-
-Application file:
-
-
-
-`app/app.py`
-
-
-
-The Streamlit application provides:
-
-
-
-\- State filter.
-
-\- City filter.
-
-\- Pollutant filter.
-
-\- KPI metrics for records, cities, stations, and missing average readings.
-
-\- Average measurement comparison by pollutant.
-
-\- Top city-pollutant average chart.
-
-\- Monitoring-station map.
-
-\- Filtered data table.
-
-\- CSV download for the filtered records.
-
-
-
-\### Run the application
-
-
-
-Open Command Prompt in the project root directory and run:
-
-
+### 1. Clone the Repository
 
 ```bash
-
-python -m pip install -r app/requirements.txt
-
-python -m streamlit run app/app.py
-
-```
-
-
-
-Streamlit will display a local URL, usually:
-
-
-
-`http://localhost:8501`
-
-
-
-Open that URL in a browser if the page does not open automatically.
-
-
-
-The app expects the cleaned dataset at:
-
-
-
-`data/aqi\_cleaned.csv`
-
-
-
-Keep this file in the expected location unless you update the application code.
-
-
-
-\## SQL Analysis
-
-
-
-SQL scripts are stored in the `sql/` directory.
-
-
-
-Expected scripts include:
-
-
-
-\- `sql/01\_create\_table.sql`
-
-\- `sql/02\_pm25\_city\_analysis.sql`
-
-\- `sql/03\_pm10\_city\_analysis.sql`
-
-\- `sql/04\_data\_quality\_checks.sql`
-
-
-
-These scripts support database/table setup, pollutant-specific city analysis, and data-quality checks.
-
-
-
-\*\*Important:\*\* Review the database name and table structure before executing SQL. The supplied scripts may use the schema name `india\_city\_intelligence`. If your MySQL table is stored in another schema, update the `USE` statement accordingly.
-
-
-
-Do not execute table-creation or data-loading scripts against a production database without reviewing their effects.
-
-
-
-\## Project Structure
-
-
-
-```text
-
-India\_City\_Intelligence/
-
-├── app/
-
-│   ├── app.py
-
-│   ├── requirements.txt
-
-│   └── README.md
-
-├── data/
-
-│   ├── aqi\_data.csv
-
-│   └── aqi\_cleaned.csv
-
-├── notebooks/
-
-│   ├── 02\_data\_quality.py
-
-│   ├── 04\_eda.py
-
-│   └── 05\_data\_visualization.py
-
-├── outputs/
-
-│   ├── charts/
-
-│   │   ├── missing\_measurements.png
-
-│   │   ├── pollutant\_comparison.png
-
-│   │   └── top\_10\_cities.png
-
-│   ├── pm25\_city\_analysis.csv
-
-│   └── pm10\_city\_analysis.csv
-
-├── powerbi/
-
-│   ├── India\_City\_Intelligence.pbix
-
-│   └── dashboard screenshots, if included
-
-├── sql/
-
-│   ├── 01\_create\_table.sql
-
-│   ├── 02\_pm25\_city\_analysis.sql
-
-│   ├── 03\_pm10\_city\_analysis.sql
-
-│   └── 04\_data\_quality\_checks.sql
-
-├── .gitignore
-
-└── README.md
-
-```
-
-
-
-This is the expected layout. If your local filenames differ, update the documentation to match your actual files.
-
-
-
-\## Installation and Setup
-
-
-
-\### Requirements
-
-
-
-\- Python 3.10 or a compatible supported version.
-
-\- Git for version control.
-
-\- MySQL Server and MySQL Workbench for the SQL workflow.
-
-\- Power BI Desktop for opening the `.pbix` report.
-
-\- Packages listed in `app/requirements.txt` for the Streamlit application.
-
-
-
-\### Clone the GitHub repository
-
-
-
-After the project has been uploaded, clone it using:
-
-
-
-```bash
-
-git clone https://github.com/YOUR-GITHUB-USERNAME/India-City-Intelligence.git
-
+git clone https://github.com/gokultangade/India-City-Intelligence.git
 cd India-City-Intelligence
-
 ```
 
+### 2. Install Python Dependencies
 
-
-Replace `YOUR-GITHUB-USERNAME` with your GitHub username.
-
-
-
-\### Install application requirements
-
-
+Run this command from the project root:
 
 ```bash
-
-python -m pip install -r app/requirements.txt
-
+python -m pip install -r requirements.txt
 ```
 
+The root `requirements.txt` includes the packages required by the Streamlit application.
 
+### 3. Run the Streamlit Dashboard
 
-\### Start the Streamlit application
-
-
+From the project root, run:
 
 ```bash
-
 python -m streamlit run app/app.py
-
 ```
 
+Streamlit will display a local URL in the terminal. Open that URL in your browser.
 
+### 4. Open the Power BI Report
 
-\### Open the Power BI report
+Open `powerbi/India_City_Intelligence.pbix` in Power BI Desktop.
 
+If Power BI requests a data-source path or credentials, update the data-source settings for your local environment.
 
+### 5. Run Python Analysis Scripts
 
-Open `powerbi/India\_City\_Intelligence.pbix` in Power BI Desktop. If Power BI requests a data-source path or credentials, update the data-source settings for your local environment.
-
-
-
-\### Run the Python scripts
-
-
-
-Run the scripts from the project root so relative paths resolve correctly:
-
-
+Run scripts from the project root so their relative paths resolve correctly:
 
 ```bash
-
-python notebooks/02\_data\_quality.py
-
-python notebooks/04\_eda.py
-
-python notebooks/05\_data\_visualization.py
-
+python notebooks/02_data_quality.py
+python notebooks/04_eda.py
+python notebooks/05_data_visualization.py
 ```
 
+If your local filenames or paths differ, use the actual filenames in your project.
 
+### 6. Run SQL Scripts
 
-If a script uses a different input or output path on your computer, update it before running.
+Open the relevant `.sql` file in MySQL Workbench. Confirm the database/schema, table structure, and column names before executing the query.
 
+## How to Use the Streamlit Dashboard
 
+1. Start the Streamlit application.
+2. Select a state, city, and pollutant using the filters.
+3. Review the KPI metrics and charts.
+4. Explore monitoring-station locations on the map.
+5. Inspect the filtered records in the data table.
+6. Download the filtered data as a CSV file.
 
-\### Run SQL scripts
+## Data Source Attribution and License
 
+The underlying air-quality data is sourced from the Government of India's Open Government Data Platform.
 
+**Dataset:** Real Time Air Quality Index from Various Locations  
+**Data provider:** Central Pollution Control Board (CPCB), Ministry of Environment, Forest and Climate Change, Government of India  
+**Source URL:** https://www.data.gov.in/resource/real-time-air-quality-index-various-locations  
+**Accessed:** 25 October 2026
 
-Open the relevant SQL file in MySQL Workbench. Confirm the database/schema name, table structure, and column names before executing the query.
+Please refer to the dataset listing and its applicable licence or terms before redistributing the source data. Where applicable, retain the required attribution to the data provider, source, and licence.
 
+This project is an independent analytics project and does not imply endorsement by CPCB or the Government of India.
 
+## Limitations
 
-\## How to Use the Dashboard
+- The dataset represents a snapshot and may not reflect current air-quality conditions.
+- The application does not automatically refresh the dataset in real time.
+- Measurement availability varies by city, station, pollutant, and timestamp.
+- Missing values may affect comparisons and rankings.
+- Results depend on the source data and implemented cleaning and aggregation rules.
+- Geographic accuracy depends on the coordinates provided in the dataset.
+- Online map tiles may require an internet connection.
+- This project is not intended for medical advice, regulatory decisions, or official air-quality alerts.
 
+## Future Improvements
 
+- Integrate a reliable and permitted regularly updated data source.
+- Add time-series analysis and date filters.
+- Add automated data-validation tests.
+- Display measurement units and source timestamps more clearly.
+- Document aggregation choices for every chart.
+- Add scheduled refresh and dataset version tracking.
+- Improve application configuration and error handling.
+- Add automated testing and a reproducible development environment.
+- Expand dashboard insights and comparisons across cities and states.
 
-1\. Start the Streamlit application.
+## Author
 
-2\. Select a state, city, and pollutant using the filters.
+**Gokul Rajaram Tangade**
 
-3\. Review the KPI metrics and charts.
+Data Analytics / Data Science Portfolio Project
 
-4\. Explore monitoring-station locations on the map.
+**Technologies:** Python, pandas, MySQL, SQL, Power BI, Power Query, Streamlit, Git, and GitHub.
 
-5\. Inspect the filtered records table.
-
-6\. Download the filtered data as a CSV file.
-
-
-
-\## Key Findings
-
-
-
-The analyzed dataset snapshot contained 3,696 records across 270 cities, 31 states, and 528 monitoring stations.
-
-
-
-The data-quality review found 329 rows with missing pollutant measurements in the checked fields. The implemented checks did not detect duplicate rows, invalid dates, invalid coordinates, negative measurements, or inconsistent minimum/average/maximum values.
-
-
-
-These findings describe the dataset snapshot and the checks performed. They do not establish current air-quality conditions. Results should be interpreted in context, considering timestamps, missing data, pollutant type, and the method used to aggregate measurements.
-
-
-
-\## Limitations
-
-
-
-\- The dataset may not represent current air-quality conditions.
-
-\- Measurement availability can vary by city, station, pollutant, and timestamp.
-
-\- Missing values may affect comparisons and rankings.
-
-\- Results depend on the source data and implemented cleaning and aggregation rules.
-
-\- Geographic accuracy depends on the coordinates available in the dataset.
-
-\- The map may require an internet connection to load map tiles.
-
-\- This project is not intended for medical advice, regulatory decisions, or official air-quality alerts.
-
-
-
-\## Future Improvements
-
-
-
-\- Integrate a reliable, permitted, regularly updated data source.
-
-\- Add time-series analysis and date filters.
-
-\- Add automated data-validation tests.
-
-\- Display measurement units and source timestamps more clearly.
-
-\- Document aggregation choices for all charts.
-
-\- Add scheduled refresh and dataset version tracking.
-
-\- Improve application configuration and error handling.
-
-\- Add screenshots of the Power BI report and Streamlit application.
-
-\- Add a reproducible environment and automated test suite.
-
-
-
-\## Author
-
-
-
-\*\*Gokul Rajaram Tangade\*\*
-
-
-
-Data Analytics / Data Science portfolio project.
-
-
-
-\*\*Tools:\*\* Python, pandas, MySQL, SQL, Power BI, Power Query, Streamlit, Git, and GitHub.
-
-
-
-\---
-
+**GitHub Repository:**  
+https://github.com/gokultangade/India-City-Intelligence
