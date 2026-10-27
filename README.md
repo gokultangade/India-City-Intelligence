@@ -328,3 +328,8 @@ Data Analytics / Data Science Portfolio Project
 
 **GitHub Repository:**  
 https://github.com/gokultangade/India-City-Intelligence
+
+
+## Live Dashboard
+
+[Open India City Intelligence Dashboard](https://india-city-intelligence.streamlit.app/)
