@@ -16,7 +16,9 @@ st.caption("Explore the supplied air-quality dataset by state, city, and polluta
 APP_DIR = Path(__file__).resolve().parent
 PROJECT_DIR = APP_DIR.parent
 DATA_CANDIDATES = [
+    PROJECT_DIR / "data" / "aqi_api_cleaned.csv",
     PROJECT_DIR / "data" / "aqi_cleaned.csv",
+    APP_DIR / "aqi_api_cleaned.csv",
     APP_DIR / "aqi_cleaned.csv",
 ]
 
